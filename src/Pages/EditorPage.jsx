@@ -9,9 +9,6 @@ const EditorPage = () => {
         },
         {
             socketId:2,userName:'Komal Bhardwaj'
-        },
-        {
-            socketId:3,userName:'Leesha Sharma'
         }
 ])
   return (

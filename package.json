@@ -16,12 +16,17 @@
     "@uiw/codemirror-theme-vscode": "^4.22.2",
     "@uiw/react-codemirror": "^4.22.2",
     "codemirror": "^5.65.16",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "http-proxy-middleware": "^3.0.0",
     "react": "^18.2.0",
     "react-avatar": "^5.0.3",
     "react-codemirror2": "^8.0.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.23.1",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
     "uuid": "^10.0.0"
   },
   "devDependencies": {

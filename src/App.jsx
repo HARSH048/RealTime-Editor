@@ -11,7 +11,7 @@ function App() {
       element: <Home />,
     },
     {
-      path: '/editor/:editorId',
+      path: '/editor/:roomId',
       element: <EditorPage />,
     },
   ]);

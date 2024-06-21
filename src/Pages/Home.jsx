@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
     const [roomId, setRoomId] = useState('');
-    const [username, setUsername] = useState('');
+    const [userName, setUsername] = useState('');
     const navigate = useNavigate();
   
     const getUUid = (e) => {
@@ -17,14 +17,14 @@ const Home = () => {
 
     const redirectOnEditorPage = () => {
 
-            if(!roomId || !username){
+            if(!roomId || !userName){
                 toast.error('RoomId & username is required')
                 return;
             }
 
         // redirect on editor page
         navigate(`editor/${roomId}`,{state:{
-            username
+          userName
         }});
     }
 
@@ -44,7 +44,7 @@ const Home = () => {
         <div className='inputGroup'>
             <input type="text" className='inputBox' placeholder='ROOM ID' value={roomId}
             onChange={(e) => setRoomId(e.target.value)} onKeyUp={handleInputEnter}/>
-            <input type='text' className='inputBox' placeholder='USERNAME'  value={username}
+            <input type='text' className='inputBox' placeholder='USERNAME'  value={userName}
             onChange={(e) => setUsername(e.target.value)} onKeyUp={handleInputEnter}/>
             <button className='btn joinBtn' onClick={redirectOnEditorPage}>Join</button>
             <span className='createInfo'>

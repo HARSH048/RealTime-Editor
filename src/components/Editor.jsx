@@ -6,25 +6,25 @@ import "codemirror/addon/edit/closetag";
 import { githubDark } from "@uiw/codemirror-theme-github";
 import { javascript } from "@codemirror/lang-javascript";
 import { EditorView } from "@codemirror/view";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 
-const socket = io('http://localhost:4000'); 
+// const socket = io('http://localhost:4000'); 
 
 const Editor = () => {
   const [code, setCode] = useState("console.log('Code Mirror!');");
 
-  useEffect(() => {
-    // Listen for code changes from the server
+  // useEffect(() => {
+  //   // Listen for code changes from the server
 
-    socket.on("codeChange", (newCode) => {
-      setCode(newCode);
-    });
+  //   socket.on("codeChange", (newCode) => {
+  //     setCode(newCode);
+  //   });
 
     // Clean up the listener on component unmount
     // return () => {
     //   socket.off("codeChange");
     // };
-  }, []);
+  // }, []);
 
   const handleCodeChange = (newCode) => {
     setCode(newCode);

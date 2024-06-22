@@ -26,12 +26,12 @@ const Editor = () => {
     // };
   // }, []);
 
-  const handleCodeChange = (newCode) => {
-    setCode(newCode);
-    // Send the new code to the server
-    socket.emit("codeChange", newCode);
-    console.log(newCode)
-  };
+  // const handleCodeChange = (newCode) => {
+  //   setCode(newCode);
+  //   // Send the new code to the server
+  //   socket.emit("codeChange", newCode);
+  //   console.log(newCode)
+  // };
   return (
     <CodeMirror
       value={code}
@@ -47,7 +47,7 @@ const Editor = () => {
         lineWrapping: true, // Enable line wrapping
         // Any other CodeMirror options you want to include
       }}
-      onChange={(value) => handleCodeChange(value)}
+      // onChange={(value) => handleCodeChange(value)}
     />
   );
 };

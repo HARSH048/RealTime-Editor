@@ -35,6 +35,7 @@ io.on("connection", (socket) => {
     socketMapper[socket.id] = userName;
     socket.join(roomId);
     const client = getAllCollectedClientInRoom(roomId);
+    console.log(client)
     io.to(roomId).emit(Actions.JOINED, {
       client,
       userName,
@@ -42,10 +43,10 @@ io.on("connection", (socket) => {
     });
   });
 
-  socket.on("codeChange", (code) => {
-    // Broadcast the code change to all other clients
-    socket.broadcast.emit("codeChange", code);
-  });
+  // socket.on("codeChange", (code) => {
+  //   // Broadcast the code change to all other clients
+  //   socket.broadcast.emit("codeChange", code);
+  // });
 
   socket.on("disconnect", () => {
     console.log("user disconnected");

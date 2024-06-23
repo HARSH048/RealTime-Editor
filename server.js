@@ -43,14 +43,19 @@ io.on("connection", (socket) => {
     });
   });
 
-  // socket.on("codeChange", (code) => {
-  //   // Broadcast the code change to all other clients
-  //   socket.broadcast.emit("codeChange", code);
-  // });
+  socket.on(Actions.CODE_CHANGE, ({roomId,newCode}) => {
+    // Broadcast the code change to all other clients
+    console.log("vent come ",roomId)
+    io.to(roomId).emit(Actions.CODE_CHANGE, {
+      newCode
+    });
+    console.log(`Code change broadcasted to room ${roomId}`);
+  });
 
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
+
 });
 
 server.listen(4000, () => {

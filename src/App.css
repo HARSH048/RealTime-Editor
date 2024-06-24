@@ -138,4 +138,32 @@ html, body, #root {
   height: 100%;
 }
 
+.joinBtn:active,
+.leaveBtn:active {
+  background: #1e5835; /* Darker shade for active state */
+  transform: scale(0.98); /* Slightly shrink button when clicked */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Lighter shadow on active */
+}
+
+.joinBtn:focus,
+.leaveBtn:focus {
+  outline: 2px solid #4aed88; /* Add focus outline */
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(74, 237, 136, 0.5); /* Focus ring */
+}
+
+/* Additional focus styles for better UX */
+.btn:focus {
+  outline: 2px solid #4aed88;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(74, 237, 136, 0.5); /* Focus ring */
+}
+
+/* Ensuring buttons are visually distinct and accessible */
+.btn:disabled {
+  background: #a5a5a5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
 

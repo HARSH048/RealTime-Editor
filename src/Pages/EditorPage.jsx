@@ -18,7 +18,8 @@ const EditorPage = () => {
     if (socketRef.current) {
       console.log(socketRef.current)
       await socketRef.current.emit(Actions.LEAVE, { roomId });
-      socketRef.current.disconnect();
+      socketRef.current.disconnect()
+      isInitialized.current=false
       navigate("/");
     }
   };
@@ -77,7 +78,7 @@ const EditorPage = () => {
           socketRef.current.off(Actions.LEAVE);
           socketRef.current.off("connect_error", handleErrors);
           socketRef.current.off("connect_failed", handleErrors);
-          socketRef.current.disconnect();
+          socketRef.current.disconnect(true);
         }
         isInitialized.current = false; // Reset initialization flag on cleanup
       };

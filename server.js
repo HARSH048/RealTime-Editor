@@ -45,7 +45,12 @@ io.on("connection", (socket) => {
       userName,
       socketId: socket.id,
     });
-    socket.to(roomId).emit('message', { userName, message: `${userName} has joined the room.` });
+    socket
+      .to(roomId)
+      .emit("message", {
+        userName,
+        message: `${userName} has joined the room.`,
+      });
   });
 
   socket.on(Actions.CODE_CHANGE, ({ roomId, newCode }) => {
@@ -57,21 +62,35 @@ io.on("connection", (socket) => {
   socket.on(Actions.LEAVE, ({ roomId }) => {
     socket.leave(roomId);
     const client = getAllCollectedClientInRoom(roomId);
-    console.log("client",client);
     socket.broadcast.to(roomId).emit(Actions.LEAVE, {
-        client,
-        userName: socketMapper[socket.id]
-      });
+      client,
+      userName: socketMapper[socket.id],
+    });
   });
 
-  socket.on("disconnect", () => {
-    console.log("user disconnected", socket.id);
-    // Remove the user from the socketMapper
-    const rooms = Array.from(socket.rooms);
-    rooms.forEach((roomId) => {
+  socket.on('disconnecting', () => {
+    console.log('user disconnecting', socket.id);
 
+    // Get the rooms the socket is part of
+    const rooms = Array.from(socket.rooms);
+    
+    rooms.forEach((roomId) => {
+      if (roomId !== socket.id) { // Ignore the default room with the socket id
+        socket.leave(roomId);
+        const client = getAllCollectedClientInRoom(roomId);
+        socket.broadcast.to(roomId).emit(Actions.LEAVE, {
+          client,
+          userName: socketMapper[socket.id],
+        });
+      }
     });
+
     delete socketMapper[socket.id];
+  });
+
+  // Handle regular disconnect event for cleanup
+  socket.on('disconnect', () => {
+    console.log('user disconnected', socket.id);
   });
 });
 

@@ -50,7 +50,7 @@ const Home = () => {
             <span className='createInfo'>
                 If you don't have invite then create &nbsp;
                 <a href='' className='createNewBtn' onClick={getUUid}>
-                new Room
+                Room
             </a>
             </span>
         </div>

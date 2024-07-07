@@ -1,7 +1,7 @@
-import express from 'express';
-import http from 'http';
-import { Server } from 'socket.io';
-import cors from 'cors';
+import express from "express";
+import http from "http";
+import { Server } from "socket.io";
+import cors from "cors";
 import Actions from "./src/action.js";
 
 const app = express();
@@ -33,6 +33,11 @@ function getAllCollectedClientInRoom(roomId) {
   return clients;
 }
 
+const getRoomsForSocket = (socket) => {
+  const allRooms = Array.from(socket.rooms);
+  return allRooms.filter((room) => room !== socket.id);
+};
+
 io.on("connection", (socket) => {
   console.log("a user connected", socket.id);
 
@@ -45,7 +50,10 @@ io.on("connection", (socket) => {
       userName,
       socketId: socket.id,
     });
-    socket.to(roomId).emit('message', { userName, message: `${userName} has joined the room.` });
+    socket.to(roomId).emit("message", {
+      userName,
+      message: `${userName} has joined the room.`,
+    });
   });
 
   socket.on(Actions.CODE_CHANGE, ({ roomId, newCode }) => {
@@ -57,20 +65,29 @@ io.on("connection", (socket) => {
   socket.on(Actions.LEAVE, ({ roomId }) => {
     socket.leave(roomId);
     const client = getAllCollectedClientInRoom(roomId);
-    console.log("client",client);
-    socket.broadcast.to(roomId).emit(Actions.LEAVE, {
-        client,
-        userName: socketMapper[socket.id]
-      });
+    console.log("client", client);
+    socket.to(roomId).emit(Actions.LEAVE, {
+      client,
+      userName: socketMapper[socket.id],
+    });
+  });
+
+  socket.on("disconnecting", () => {
+    console.log("user is disconnecting");
+    const roomId = getRoomsForSocket(socket);
+    socket.leave(roomId[0]);
+    const client = getAllCollectedClientInRoom(roomId[0]);
+    socket.to(roomId[0]).emit(Actions.LEAVE, {
+      client,
+      userName: socketMapper[socket.id],
+    });
   });
 
   socket.on("disconnect", () => {
     console.log("user disconnected", socket.id);
     // Remove the user from the socketMapper
     const rooms = Array.from(socket.rooms);
-    rooms.forEach((roomId) => {
-
-    });
+    rooms.forEach((roomId) => {});
     delete socketMapper[socket.id];
   });
 });
